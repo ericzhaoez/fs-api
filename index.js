@@ -276,4 +276,24 @@ app.get("/api/properties/:id", (req, res) => {
 
 });
 
+// 8. returns all user information
+
+app.get("/api/users", (req, res) => {
+    const user = req.body;
+
+    connection.query(
+        "SELECT * FROM user", function(err, result) {
+        if (err) {
+            console.log(err); 
+            return res.status(500).json({message: "Failed to display"})
+        }
+        if (result.length === 0) {
+            return res.status(404).json({ message: "No users found" });
+        }
+
+        return res.status(200).json(result);
+    }
+    )
+});
+
 app.listen(3000, () => console.log("Listening on 3000"));
